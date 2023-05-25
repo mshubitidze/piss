@@ -1,17 +1,16 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen mx-6 md:m-0 gap-2 flex-col items-center justify-center">
-      <h1 className="text-4xl text-yellow-500">Piss</h1>
-      <Image
-        className="rounded-md w-full md:max-w-md"
-        src="https://uploadthing.com/f/05544578-e88c-4c51-9d10-4c9cf9e3e754_piss.jpg"
-        alt="piss"
-        width={528}
-        height={960}
-        priority
-      />
+    <main className="flex flex-col items-center justify-center mt-60">
+      <h1 className="text-6xl text-yellow-500">
+        <Link
+          className="underline-offset-4 hover:underline"
+          href="https://en.wikipedia.org/wiki/Piss"
+        >
+          Piss
+        </Link>
+      </h1>
     </main>
   );
 }
