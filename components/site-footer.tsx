@@ -6,7 +6,7 @@ import { buttonVariants } from "./ui/button"
 
 export function SiteFooter() {
   return (
-    <header className="sticky z-40 w-full bg-background">
+    <header className="sticky z-40 w-full border-t bg-background">
       <div className="container flex h-16 items-center justify-center">
         <Link href={siteConfig.links.github} target="_blank" rel="noreferrer">
           <div
