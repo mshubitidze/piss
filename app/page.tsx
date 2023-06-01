@@ -11,7 +11,7 @@ export default function IndexPage() {
           Piss
         </h1>
       </div>
-      <div className="flex gap-4">
+      <div className="flex items-center gap-4">
         <Link
           href={siteConfig.links.docs}
           target="_blank"
@@ -19,6 +19,9 @@ export default function IndexPage() {
           className={buttonVariants({ size: "lg" })}
         >
           Documentation
+        </Link>
+        <Link className={buttonVariants({ size: "sm" })} href="/uploadthing">
+          Upload
         </Link>
       </div>
     </section>
