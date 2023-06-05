@@ -1,13 +1,9 @@
-import { db } from "@/lib/db"
-import { Button } from "@/components/ui/button"
+import { revalidatePath } from "next/cache"
+import { eq } from "drizzle-orm"
 
-import {
-  deleteAllDiff,
-  deleteAllElse,
-  deleteAllPrizes,
-  deleteAllThing,
-  generatePrizes,
-} from "./actions"
+import { db } from "@/lib/db"
+import { prize } from "@/lib/db/schema"
+import { Button } from "@/components/ui/button"
 
 export default async function PrizePage() {
   const prizes = await db.query.prize.findMany()
@@ -15,34 +11,41 @@ export default async function PrizePage() {
   return (
     <div className="container my-20 grid grid-cols-5 gap-8">
       <form
-        className="flex items-center justify-center"
-        action={generatePrizes}
+        className="flex flex-col items-center justify-center gap-2"
+        action={async () => {
+          "use server"
+          await db.insert(prize).values([
+            {
+              name: "what",
+            },
+            {
+              name: "kekw",
+            },
+            {
+              name: "420",
+            },
+          ])
+          revalidatePath("/prizes")
+        }}
       >
-        <Button variant={"default"}>generate</Button>
+        <Button className="w-full" variant={"default"}>
+          generate data
+        </Button>
       </form>
-      <form
-        className="flex items-center justify-center"
-        action={deleteAllThing}
-      >
-        <Button variant={"destructive"}>delete thing</Button>
-      </form>
-      <form className="flex items-center justify-center" action={deleteAllElse}>
-        <Button variant={"destructive"}>delete else</Button>
-      </form>
-      <form className="flex items-center justify-center" action={deleteAllDiff}>
-        <Button variant={"destructive"}>delete diff</Button>
-      </form>
-      <form
-        className="flex items-center justify-center"
-        action={deleteAllPrizes}
-      >
-        <Button variant={"destructive"}>delete all</Button>
-      </form>
-      <div className="col-span-full grid grid-cols-5 gap-8">
-        {prizes.map((prize) => (
-          <pre>{JSON.stringify(prize, null, 2)}</pre>
-        ))}
-      </div>
+      {prizes.map((p) => (
+        <div className="flex flex-col items-center justify-center">
+          <form
+            action={async () => {
+              "use server"
+              await db.delete(prize).where(eq(prize.name, p.name))
+              revalidatePath("/prizes")
+            }}
+          >
+            <Button variant={"destructive"}>delete {p.name}</Button>
+          </form>
+          <pre>{JSON.stringify(p, null, 2)}</pre>
+        </div>
+      ))}
     </div>
   )
 }
