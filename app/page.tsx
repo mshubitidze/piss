@@ -20,7 +20,10 @@ export default function IndexPage() {
         >
           Documentation
         </Link>
-        <Link className={buttonVariants({ size: "sm" })} href="/uploadthing">
+        <Link
+          className={buttonVariants({ variant: "secondary", size: "default" })}
+          href="/uploadthing"
+        >
           Upload
         </Link>
       </div>

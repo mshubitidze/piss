@@ -1,0 +1,1 @@
+ALTER TABLE `piss_user` ADD `email` text;
