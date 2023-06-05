@@ -5,13 +5,15 @@ import { db } from "@/lib/db"
 import { prize } from "@/lib/db/schema"
 import { Button } from "@/components/ui/button"
 
+export const revalidate = 0
+
 export default async function PrizePage() {
   const prizes = await db.query.prize.findMany()
 
   return (
     <div className="container my-20 grid grid-cols-5 gap-8">
       <form
-        className="flex flex-col items-center justify-center gap-2"
+        className="flex flex-col items-center gap-2"
         action={async () => {
           "use server"
           await db.insert(prize).values([
@@ -31,19 +33,34 @@ export default async function PrizePage() {
         <Button className="w-full" variant={"default"}>
           generate data
         </Button>
+        <Button
+          className="w-full"
+          variant={"destructive"}
+          formAction={async () => {
+            "use server"
+            await db.delete(prize)
+            revalidatePath("/prizes")
+          }}
+        >
+          delete all
+        </Button>
       </form>
       {prizes.map((p) => (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center gap-2">
           <form
             action={async () => {
               "use server"
-              await db.delete(prize).where(eq(prize.name, p.name))
+              await db.delete(prize).where(eq(prize.id, p.id))
               revalidatePath("/prizes")
             }}
           >
-            <Button variant={"destructive"}>delete {p.name}</Button>
+            <Button className="self-end" variant={"outline"}>
+              delete {p.id}
+            </Button>
           </form>
-          <pre>{JSON.stringify(p, null, 2)}</pre>
+          <pre className="rounded-md border p-2">
+            {JSON.stringify(p, null, 2)}
+          </pre>
         </div>
       ))}
     </div>
