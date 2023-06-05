@@ -4,6 +4,3 @@ CREATE TABLE `piss_prize` (
 	`isWinning` boolean DEFAULT false,
 	`isWon` boolean DEFAULT false,
 	`imageUrl` text);
---> statement-breakpoint
-DROP TABLE `piss_post`;--> statement-breakpoint
-DROP TABLE `piss_user`;

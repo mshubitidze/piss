@@ -11,7 +11,7 @@ const mysqlTable = mysqlTableCreator((name) => `piss_${name}`)
 export const prize = mysqlTable("prize", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  isWinning: boolean("isWinning").default(false),
+  isWinning: boolean("isWinning").default(true),
   isWon: boolean("isWon").default(false),
   imageUrl: text("imageUrl"),
 })
