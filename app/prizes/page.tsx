@@ -2,10 +2,17 @@ import { revalidatePath } from "next/cache"
 import { eq } from "drizzle-orm"
 
 import { db } from "@/lib/db"
-import { prize } from "@/lib/db/schema"
+import { NewPrize, prize } from "@/lib/db/schema"
 import { Button } from "@/components/ui/button"
 
 export const revalidate = 0
+
+const dbData: NewPrize[] = [
+  { name: "what" },
+  { name: "kekw" },
+  { name: "420" },
+  { name: "69" },
+]
 
 export default async function PrizePage() {
   const prizes = await db.query.prize.findMany()
@@ -16,17 +23,7 @@ export default async function PrizePage() {
         className="flex flex-col items-center gap-2"
         action={async () => {
           "use server"
-          await db.insert(prize).values([
-            {
-              name: "what",
-            },
-            {
-              name: "kekw",
-            },
-            {
-              name: "420",
-            },
-          ])
+          await db.insert(prize).values(dbData)
           revalidatePath("/prizes")
         }}
       >
