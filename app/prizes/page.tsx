@@ -7,19 +7,25 @@ import { prize } from "@/lib/db/schema"
 import { Skeleton } from "@/components/ui/skeleton"
 
 import { dbData } from "./data"
-import PrizeActionPending from "./prize-action-pending"
+import PrizeActionWithPending from "./prize-action-with-pending"
 
 export const revalidate = 0
 
 function PrizesLoading() {
   return (
     <>
-      {Array.from({ length: 2 }).map((_) => (
-        <div className="flex flex-col items-center justify-center gap-2">
-          <Skeleton className="h-[40px] w-[105px]" />
-          <Skeleton className="h-[186px] w-[220px]" />
-        </div>
-      ))}
+      <div className="flex flex-col items-center justify-center gap-2">
+        <Skeleton className="h-[40px] w-[105px]" />
+        <Skeleton className="h-[186px] w-[220px]" />
+      </div>
+      <div className="flex flex-col items-center justify-center gap-2">
+        <Skeleton className="h-[40px] w-[105px]" />
+        <Skeleton className="h-[186px] w-[220px]" />
+      </div>
+      <div className="flex flex-col items-center justify-center gap-2">
+        <Skeleton className="h-[40px] w-[105px]" />
+        <Skeleton className="h-[186px] w-[220px]" />
+      </div>
     </>
   )
 }
@@ -32,7 +38,7 @@ async function FetchPrizes() {
       {prizes.map((p) => (
         <div className="flex flex-col items-center justify-center gap-2">
           <form>
-            <PrizeActionPending
+            <PrizeActionWithPending
               variant="outline"
               formAction={async () => {
                 "use server"
@@ -68,14 +74,14 @@ export default function PrizePage() {
     <div className="container my-20 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       <div className="flex flex-col items-center gap-2">
         <form>
-          <PrizeActionPending
+          <PrizeActionWithPending
             variant="default"
             formAction={generate}
             buttonText={"generate things"}
           />
         </form>
         <form>
-          <PrizeActionPending
+          <PrizeActionWithPending
             variant="destructive"
             formAction={deleteAll}
             buttonText={"delete all"}

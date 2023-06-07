@@ -5,4 +5,5 @@ export default {
   out: "./lib/db/migrations",
   connectionString: process.env.DATABASE_URL,
   breakpoints: true,
+  tablesFilter: ["piss_*"],
 } satisfies Config

@@ -6,15 +6,15 @@ import { experimental_useFormStatus as useFormStatus } from "react-dom"
 
 import { Button } from "@/components/ui/button"
 
-interface PrizeActionPendingProps extends ComponentProps<typeof Button> {
+interface PrizeActionWithPendingProps extends ComponentProps<typeof Button> {
   buttonText: string
 }
 
-export default function PrizeActionPending({
+export default function PrizeActionWithPending({
   variant,
   formAction,
   buttonText: buttonText,
-}: PrizeActionPendingProps) {
+}: PrizeActionWithPendingProps) {
   const { pending } = useFormStatus()
   return (
     <Button disabled={pending} variant={variant} formAction={formAction}>
