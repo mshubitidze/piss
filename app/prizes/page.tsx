@@ -11,7 +11,7 @@ import PrizeActionPending from "./prize-action-pending"
 
 export const revalidate = 0
 
-export function PrizesLoading() {
+function PrizesLoading() {
   return (
     <>
       {Array.from({ length: 2 }).map((_) => (
@@ -24,7 +24,7 @@ export function PrizesLoading() {
   )
 }
 
-export async function FetchPrizes() {
+async function FetchPrizes() {
   const prizes = await db.query.prize.findMany()
 
   return (
