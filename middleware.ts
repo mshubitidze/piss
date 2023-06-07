@@ -1,11 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server"
 
 export default async function middleware(req: NextRequest) {
-  const host = req.nextUrl.host
+  const subdomain = req.nextUrl.href.split("://")[1].split("/")[0]
   console.log(req.nextUrl)
-  if (host === "gh.piss.dev")
+  if (subdomain.includes("gh.piss.dev"))
     return NextResponse.redirect("https://github.com/mshubitidze")
-  if (host === "twt.piss.dev")
+  if (subdomain.includes("twt.piss.dev"))
     return NextResponse.redirect("https://twitter.com/_mshub")
 
   return NextResponse.next()
