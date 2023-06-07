@@ -39,7 +39,7 @@ async function FetchPrizes() {
                 await db.delete(prize).where(eq(prize.id, p.id))
                 revalidatePath("/prizes")
               }}
-              buttonText={`delete`}
+              buttonText={`delete ${p.id}`}
             />
           </form>
           <pre className="rounded-md border p-2">
@@ -52,28 +52,32 @@ async function FetchPrizes() {
 }
 
 export default function PrizePage() {
+  async function generate() {
+    "use server"
+    await db.insert(prize).values(dbData)
+    revalidatePath("/prizes")
+  }
+
+  async function deleteAll() {
+    "use server"
+    await db.delete(prize)
+    revalidatePath("/prizes")
+  }
+
   return (
     <div className="container my-20 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       <div className="flex flex-col items-center gap-2">
         <form>
           <PrizeActionPending
             variant="default"
-            formAction={async () => {
-              "use server"
-              await db.insert(prize).values(dbData)
-              revalidatePath("/prizes")
-            }}
+            formAction={generate}
             buttonText={"generate things"}
           />
         </form>
         <form>
           <PrizeActionPending
             variant="destructive"
-            formAction={async () => {
-              "use server"
-              await db.delete(prize)
-              revalidatePath("/prizes")
-            }}
+            formAction={deleteAll}
             buttonText={"delete all"}
           />
         </form>
