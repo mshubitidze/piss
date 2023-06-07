@@ -1,65 +1,87 @@
+import { Suspense } from "react"
 import { revalidatePath } from "next/cache"
 import { eq } from "drizzle-orm"
 
 import { db } from "@/lib/db"
-import { NewPrize, prize } from "@/lib/db/schema"
-import { Button } from "@/components/ui/button"
+import { prize } from "@/lib/db/schema"
+import { Skeleton } from "@/components/ui/skeleton"
+
+import { dbData } from "./data"
+import PrizeActionPending from "./prize-action-pending"
 
 export const revalidate = 0
 
-const dbData: NewPrize[] = [
-  { name: "what" },
-  { name: "kekw" },
-  { name: "420" },
-  { name: "69" },
-]
+export function PrizesLoading() {
+  return (
+    <>
+      {Array.from({ length: 2 }).map((_) => (
+        <div className="flex flex-col items-center justify-center gap-2">
+          <Skeleton className="h-[40px] w-[105px]" />
+          <Skeleton className="h-[186px] w-[220px]" />
+        </div>
+      ))}
+    </>
+  )
+}
 
-export default async function PrizePage() {
+export async function FetchPrizes() {
   const prizes = await db.query.prize.findMany()
 
   return (
-    <div className="container my-20 grid grid-cols-5 gap-8">
-      <form
-        className="flex flex-col items-center gap-2"
-        action={async () => {
-          "use server"
-          await db.insert(prize).values(dbData)
-          revalidatePath("/prizes")
-        }}
-      >
-        <Button className="w-full" variant={"default"}>
-          generate data
-        </Button>
-        <Button
-          className="w-full"
-          variant={"destructive"}
-          formAction={async () => {
-            "use server"
-            await db.delete(prize)
-            revalidatePath("/prizes")
-          }}
-        >
-          delete all
-        </Button>
-      </form>
+    <>
       {prizes.map((p) => (
         <div className="flex flex-col items-center justify-center gap-2">
-          <form
-            action={async () => {
-              "use server"
-              await db.delete(prize).where(eq(prize.id, p.id))
-              revalidatePath("/prizes")
-            }}
-          >
-            <Button className="self-end" variant={"outline"}>
-              delete {p.id}
-            </Button>
+          <form>
+            <PrizeActionPending
+              variant="outline"
+              formAction={async () => {
+                "use server"
+                await db.delete(prize).where(eq(prize.id, p.id))
+                revalidatePath("/prizes")
+              }}
+              buttonText={`delete`}
+            />
           </form>
           <pre className="rounded-md border p-2">
             {JSON.stringify(p, null, 2)}
           </pre>
         </div>
       ))}
+    </>
+  )
+}
+
+export default function PrizePage() {
+  return (
+    <div className="container my-20 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="flex flex-col items-center gap-2">
+        <form>
+          <PrizeActionPending
+            variant="default"
+            formAction={async () => {
+              "use server"
+              await db.insert(prize).values(dbData)
+              revalidatePath("/prizes")
+            }}
+            buttonText={"generate things"}
+          />
+        </form>
+        <form>
+          <PrizeActionPending
+            variant="destructive"
+            formAction={async () => {
+              "use server"
+              await db.delete(prize)
+              revalidatePath("/prizes")
+            }}
+            buttonText={"delete all"}
+          />
+        </form>
+      </div>
+      <Suspense fallback={<PrizesLoading />}>
+        {/* @ts-ignore server component */}
+        <FetchPrizes />
+      </Suspense>
     </div>
   )
 }

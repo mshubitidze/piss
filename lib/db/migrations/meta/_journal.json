@@ -8,6 +8,13 @@
       "when": 1685993711199,
       "tag": "0000_unknown_firelord",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1686144067380,
+      "tag": "0001_gifted_red_ghost",
+      "breakpoints": true
     }
   ]
 }

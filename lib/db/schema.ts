@@ -1,6 +1,6 @@
 import { InferModel } from "drizzle-orm"
 import {
-  boolean,
+  // boolean,
   mysqlTableCreator,
   serial,
   text,
@@ -11,9 +11,9 @@ const mysqlTable = mysqlTableCreator((name) => `piss_${name}`)
 export const prize = mysqlTable("prize", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  isWinning: boolean("isWinning").default(true),
-  isWon: boolean("isWon").default(false),
-  imageUrl: text("imageUrl"),
+  // isWinning: boolean("isWinning").default(true),
+  // isWon: boolean("isWon").default(false),
+  // imageUrl: text("imageUrl"),
 })
 
 export type Prize = InferModel<typeof prize, "select">

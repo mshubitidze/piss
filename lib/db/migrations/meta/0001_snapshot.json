@@ -1,0 +1,36 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "9f75adec-379f-4c75-a6e9-44300313b964",
+  "prevId": "ba9f1e4c-2f2d-42b8-8597-24fbb3a96886",
+  "tables": {
+    "piss_prize": {
+      "name": "piss_prize",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {}
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}
