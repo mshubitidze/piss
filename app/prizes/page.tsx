@@ -7,7 +7,7 @@ import { prize } from "@/lib/db/schema"
 import { Skeleton } from "@/components/ui/skeleton"
 
 import { dbData } from "./data"
-import PrizeActionWithPending from "./prize-action-with-pending"
+import ButtonWithPending from "./prize-action-with-pending"
 
 export const revalidate = 0
 
@@ -38,15 +38,16 @@ async function FetchPrizes() {
       {prizes.map((p) => (
         <div className="flex flex-col items-center justify-center gap-2">
           <form>
-            <PrizeActionWithPending
+            <ButtonWithPending
               variant="outline"
               formAction={async () => {
                 "use server"
                 await db.delete(prize).where(eq(prize.id, p.id))
                 revalidatePath("/prizes")
               }}
-              buttonText={`delete ${p.id}`}
-            />
+            >
+              {`delete ${p.id}`}
+            </ButtonWithPending>
           </form>
           <pre className="rounded-md border p-2">
             {JSON.stringify(p, null, 2)}
@@ -71,21 +72,20 @@ export default function PrizePage() {
   }
 
   return (
-    <div className="container my-20 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+    <div className="container my-10 grid grid-cols-1 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
       <div className="flex flex-col items-center gap-2">
         <form>
-          <PrizeActionWithPending
-            variant="default"
-            formAction={generate}
-            buttonText={"generate things"}
-          />
+          <ButtonWithPending variant="default" formAction={generate}>
+            generate
+          </ButtonWithPending>
         </form>
         <form>
-          <PrizeActionWithPending
+          <ButtonWithPending
             variant="destructive"
             formAction={deleteAll}
-            buttonText={"delete all"}
-          />
+          >
+            delete all
+          </ButtonWithPending>
         </form>
       </div>
       <Suspense fallback={<PrizesLoading />}>

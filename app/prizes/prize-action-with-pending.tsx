@@ -1,31 +1,12 @@
 "use client"
 
-import { ComponentProps } from "react"
-import { Loader2 } from "lucide-react"
 import { experimental_useFormStatus as useFormStatus } from "react-dom"
 
-import { Button } from "@/components/ui/button"
+import { Button, ButtonProps } from "@/components/ui/button"
+import { ButtonLoading } from "@/components/button-loading"
 
-interface PrizeActionWithPendingProps extends ComponentProps<typeof Button> {
-  buttonText: string
-}
-
-export default function PrizeActionWithPending({
-  variant,
-  formAction,
-  buttonText: buttonText,
-}: PrizeActionWithPendingProps) {
+export default function ButtonWithPending(props: ButtonProps) {
   const { pending } = useFormStatus()
-  return (
-    <Button disabled={pending} variant={variant} formAction={formAction}>
-      {pending ? (
-        <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Please wait...
-        </>
-      ) : (
-        buttonText
-      )}
-    </Button>
-  )
+  const Comp = pending ? ButtonLoading : Button
+  return <Comp {...props} />
 }
