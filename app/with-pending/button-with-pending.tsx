@@ -5,8 +5,20 @@ import { experimental_useFormStatus as useFormStatus } from "react-dom"
 import { Button, ButtonProps } from "@/components/ui/button"
 import { ButtonLoading } from "@/components/button-loading"
 
-export function ButtonWithPending(props: ButtonProps) {
+interface ButtonWithPendingProps extends ButtonProps {
+  action: "delete" | "generate" | number
+}
+
+export function ButtonWithPending({
+  action,
+  ...props
+}: ButtonWithPendingProps) {
   const { pending } = useFormStatus()
-  const Comp = pending ? ButtonLoading : Button
-  return <Comp {...props} />
+  return pending ? (
+    <ButtonLoading>
+      {action === "generate" ? "generating" : "deleting"}
+    </ButtonLoading>
+  ) : (
+    <Button {...props} />
+  )
 }

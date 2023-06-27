@@ -18,13 +18,13 @@ export default function IndexPage() {
           rel="noreferrer"
           className={buttonVariants({ size: "lg" })}
         >
-          Documentation
+          Docs
         </Link>
         <Link
-          className={buttonVariants({ variant: "secondary", size: "default" })}
-          href="/uploadthing"
+          className={buttonVariants({ variant: "ghost", size: "default" })}
+          href="/things"
         >
-          Upload
+          things
         </Link>
       </div>
     </section>

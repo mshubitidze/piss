@@ -15,9 +15,12 @@ export function ButtonWithTransition({
   ...props
 }: ButtonWithTransitionProps) {
   const [isPending, startTransition] = useTransition()
-  const Comp = isPending ? ButtonLoading : Button
-  return (
-    <Comp
+  return isPending ? (
+    <ButtonLoading>
+      {action === "generate" ? "generating" : "deleting"}
+    </ButtonLoading>
+  ) : (
+    <Button
       {...props}
       onClick={() =>
         startTransition(() =>

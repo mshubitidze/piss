@@ -34,6 +34,7 @@ async function FetchPrizes() {
           <form>
             <ButtonWithPending
               variant="destructive"
+              action={p.id}
               formAction={async () => {
                 "use server"
                 await deletePrize(p.id)
@@ -56,13 +57,13 @@ export default function PendingPage() {
     <>
       <div className="flex flex-col items-center gap-2">
         <form>
-          <ButtonWithPending variant="default" formAction={generate}>
+          <ButtonWithPending variant="default" action="generate" formAction={generate}>
             generate
           </ButtonWithPending>
         </form>
 
         <form>
-          <ButtonWithPending variant="destructive" formAction={deleteAll}>
+          <ButtonWithPending variant="destructive" action="delete" formAction={deleteAll}>
             delete all
           </ButtonWithPending>
         </form>
