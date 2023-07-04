@@ -11,16 +11,10 @@ export default function IndexPage() {
       >
         uploadthing
       </Link>
-      <Link
-        className={buttonVariants()}
-        href="/with-transition"
-      >
+      <Link className={buttonVariants()} href="/with-transition">
         with transition
       </Link>
-      <Link
-        className={buttonVariants()}
-        href="/with-pending"
-      >
+      <Link className={buttonVariants()} href="/with-pending">
         with pending
       </Link>
     </section>
